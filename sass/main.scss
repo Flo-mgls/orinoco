@@ -1,0 +1,23 @@
+$main-color: #f1e9f0;
+body{
+	background-color: #E8EAF6;
+}
+header{
+	background-color: $main-color;
+	box-shadow: 0 2px 8px;
+	h1{
+		font-family: 'Gloria Hallelujah', cursive;
+		color: black;
+	}
+}
+footer{
+	background-color: $main-color;
+	box-shadow: 0 -2px 8px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	h2{
+		font-family: 'Gloria Hallelujah', cursive;
+		color: black;
+	}
+}
