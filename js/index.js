@@ -37,14 +37,15 @@ get("http://localhost:3000/api/teddies/")
 
 		let addProduct = document.createElement("btn");
 		addProduct.setAttribute("class", "btn btn-primary btn-addProduct");
-		addProduct.setAttribute("id", response[i]._id);
+		addProduct.setAttribute("value", response[i]._id);
 		addProduct.textContent = "Ajouter au panier"
 		addProduct.style.zIndex = "2";
 		addProduct.style.position = "relative";
 
 		let displayProduct = document.createElement("a");
-		displayProduct.setAttribute("class", "stretched-link");
-		displayProduct.setAttribute("href", "");
+		displayProduct.setAttribute("class", "stretched-link goto-product");
+		displayProduct.setAttribute("href", `./product.html?${response[i]._id}`);
+		displayProduct.setAttribute("value", response[i]._id);
 
 		sectionProducts.append(card);
 		card.append(cardRow, displayProduct);
@@ -57,34 +58,7 @@ get("http://localhost:3000/api/teddies/")
 	return response;
 })
 .then(function(response){
-	let btnAddProduct = document.getElementsByClassName("btn-addProduct");
-	for(let i = 0; i < btnAddProduct.length; i++){
-		let idProduct = btnAddProduct[i].id;
-
-		btnAddProduct[i].addEventListener("click", function(){
-			for(let j = 0; j < response.length; j++){
-				let selectedProduct = response.filter(product => product._id == idProduct);
-				if(selectedProduct.length == 1){
-					let storedProduct = localStorage.getItem(JSON.stringify(selectedProduct));
-					if(storedProduct != null){
-						localStorage.setItem(JSON.stringify(selectedProduct), `${parseFloat(storedProduct) + 1}`);
-						displayBasket();
-						break;
-					}else{
-						localStorage.setItem(JSON.stringify(selectedProduct), "1");
-						displayBasket();
-						break;
-					}
-				}
-			}
-
-			for(let i = 0; i < localStorage.length; i++){
-				let key = localStorage.key(i)
-				console.log(key);
-				console.log(localStorage.getItem(key));
-			}
-		})
-	}
+addToBasket(response);
 })
 .catch(function(error){
 	let divAlert = document.createElement("div")
@@ -93,9 +67,13 @@ get("http://localhost:3000/api/teddies/")
 	divAlert.textContent = "Désolé, impossible d'afficher les produits";
 	document.getElementById("products").append(divAlert);
 })
+
 displayBasket();
 
-
+document.getElementById("clean-basket").addEventListener("click", function(){
+	localStorage.clear();
+	displayBasket();
+})
 
 
 

@@ -1,2 +1,8 @@
 $main-color: #f1e9f0;
 $second-color: #E8EAF6;
+
+@mixin mobile-tablet(){
+	@media all and (max-width: 992px){
+		@content
+	}
+}

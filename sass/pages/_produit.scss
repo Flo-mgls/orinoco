@@ -1,0 +1,8 @@
+.card-product{
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	@include mobile-tablet{
+		width: 100%;
+	}
+}
