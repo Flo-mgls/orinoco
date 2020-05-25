@@ -16,4 +16,26 @@ function get(url){
 	})
 }
 
-export {get};
+function displayBasket(){
+	let basket = document.getElementById("products-basket");
+	basket.innerHTML = "";
+
+	for(let i = 0; i < localStorage.length; i++){
+		if (localStorage.key(i).startsWith('[{"colors"')){
+			let listProduct = document.createElement("li");
+			listProduct.setAttribute("class", "row");
+
+			let nameProduct = document.createElement("p");
+			nameProduct.setAttribute("class", "col-8 mb-0");
+			nameProduct.textContent = JSON.parse(localStorage.key(i))[0].name;
+			let qdProduct = document.createElement("p");
+			qdProduct.setAttribute("class", "col-4 mb-0");
+			qdProduct.textContent = localStorage.getItem(localStorage.key(i));
+
+			basket.append(listProduct);
+			listProduct.append(nameProduct, qdProduct);
+		}
+	}
+
+}
+

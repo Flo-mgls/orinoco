@@ -1,21 +1,3 @@
-function get(url){
-	return new Promise((resolve, reject) => {
-		let request = new XMLHttpRequest();
-		request.open("GET", url, true);
-		request.send();
-		request.onreadystatechange = function(){
-			if(this.readyState === 4){
-				if(this.status === 200){
-
-					resolve(JSON.parse(this.responseText));
-				}else{
-					reject(request);
-				}
-			}
-		}
-	})
-}
-
 get("http://localhost:3000/api/teddies/")
 .then(function(response) {
 	for(let i = 0; i < response.length; i++){
@@ -53,22 +35,55 @@ get("http://localhost:3000/api/teddies/")
 		cardPrice.setAttribute("class", "card-text");
 		cardPrice.textContent = `${response[i].price} €`;
 
-		let addProduct = document.createElement("a");
-		addProduct.setAttribute("class", "btn btn-primary");
-		addProduct.setAttribute("href", "#");
+		let addProduct = document.createElement("btn");
+		addProduct.setAttribute("class", "btn btn-primary btn-addProduct");
+		addProduct.setAttribute("id", response[i]._id);
 		addProduct.textContent = "Ajouter au panier"
+		addProduct.style.zIndex = "2";
+		addProduct.style.position = "relative";
 
 		let displayProduct = document.createElement("a");
 		displayProduct.setAttribute("class", "stretched-link");
-		displayProduct.setAttribute("href", "#");
+		displayProduct.setAttribute("href", "");
 
 		sectionProducts.append(card);
-		card.append(cardRow);
+		card.append(cardRow, displayProduct);
 		cardRow.append(imgCol, bodyCol);
 		imgCol.append(cardImage);
 		bodyCol.append(cardBody);
-		cardBody.append(cardTitle, cardDescription, cardPrice, addProduct, displayProduct);
+		cardBody.append(cardTitle, cardDescription, cardPrice, addProduct,);
+	}
 
+	return response;
+})
+.then(function(response){
+	let btnAddProduct = document.getElementsByClassName("btn-addProduct");
+	for(let i = 0; i < btnAddProduct.length; i++){
+		let idProduct = btnAddProduct[i].id;
+
+		btnAddProduct[i].addEventListener("click", function(){
+			for(let j = 0; j < response.length; j++){
+				let selectedProduct = response.filter(product => product._id == idProduct);
+				if(selectedProduct.length == 1){
+					let storedProduct = localStorage.getItem(JSON.stringify(selectedProduct));
+					if(storedProduct != null){
+						localStorage.setItem(JSON.stringify(selectedProduct), `${parseFloat(storedProduct) + 1}`);
+						displayBasket();
+						break;
+					}else{
+						localStorage.setItem(JSON.stringify(selectedProduct), "1");
+						displayBasket();
+						break;
+					}
+				}
+			}
+
+			for(let i = 0; i < localStorage.length; i++){
+				let key = localStorage.key(i)
+				console.log(key);
+				console.log(localStorage.getItem(key));
+			}
+		})
 	}
 })
 .catch(function(error){
@@ -78,3 +93,11 @@ get("http://localhost:3000/api/teddies/")
 	divAlert.textContent = "Désolé, impossible d'afficher les produits";
 	document.getElementById("products").append(divAlert);
 })
+displayBasket();
+
+
+
+
+
+
+

@@ -38,8 +38,9 @@ get("http://localhost:3000/api/teddies/")
 		cardPrice.textContent = `${response[i].price} €`;
 
 		let addProduct = document.createElement("a");
-		addProduct.setAttribute("class", "btn btn-primary");
+		addProduct.setAttribute("class", "btn btn-primary btn-addProduct");
 		addProduct.setAttribute("href", "#");
+		addProduct.setAttribute("id", response[i]._id);
 		addProduct.textContent = "Ajouter au panier"
 
 		let displayProduct = document.createElement("a");
@@ -62,3 +63,20 @@ get("http://localhost:3000/api/teddies/")
 	divAlert.textContent = "Désolé, impossible d'afficher les produits";
 	document.getElementById("products").append(divAlert);
 })
+
+let btnAddProduct = document.getElementsByClassName("btn-addProduct");
+for(let i = 0; i < btnAddProduct.length; i++){
+	btnAddProduct.addEventListener("click", function(){
+		localStorage.setItem(`produit${i}`, btnAddProduct[i].id);
+	})
+}
+
+
+
+
+
+
+
+
+
+
