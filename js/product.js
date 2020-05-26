@@ -1,10 +1,13 @@
-let idProduct = window.location.search.substring(1);
+import {get, displayBasket, addToBasket} from "./utils.js";
+let urlWithParameters = window.location.search;
+let urlParameters = new URLSearchParams(urlWithParameters);
+let idProduct = urlParameters.get("id");
 get("http://localhost:3000/api/teddies/" + idProduct)
 .then(function(response){
 	let breadcrumb = document.getElementsByClassName("breadcrumb")[0];
 	breadcrumb.lastElementChild.setAttribute("class", "breadcrumb-item");
 	breadcrumb.lastElementChild.removeAttribute("aria-current");
-	breadcrumb.lastElementChild.innerHTML = '<a href="./index.html">Peluche</a>'
+	breadcrumb.lastElementChild.innerHTML = '<a href="./index.html">Peluches</a>'
 	let breadcrumbCurrent = document.createElement("li");
 	breadcrumbCurrent.setAttribute("class", "breadcrumb-item active")
 	breadcrumbCurrent.setAttribute("aria-current", "page");
@@ -13,7 +16,7 @@ get("http://localhost:3000/api/teddies/" + idProduct)
 
 	let sectionProducts = document.getElementById("products");
 
-	let card = document.createElement("div");
+	let card = document.createElement("article");
 	card.setAttribute("class", "card card-product");
 
 	let cardImage = document.createElement("img");

@@ -1,9 +1,10 @@
+import {get, displayBasket, addToBasket} from "./utils.js";
 get("http://localhost:3000/api/teddies/")
 .then(function(response) {
 	for(let i = 0; i < response.length; i++){
 		let sectionProducts = document.getElementById("products");
 
-		let card = document.createElement("div");
+		let card = document.createElement("article");
 		card.setAttribute("class", "card");
 
 		let cardRow = document.createElement("div");
@@ -44,7 +45,7 @@ get("http://localhost:3000/api/teddies/")
 
 		let displayProduct = document.createElement("a");
 		displayProduct.setAttribute("class", "stretched-link goto-product");
-		displayProduct.setAttribute("href", `./product.html?${response[i]._id}`);
+		displayProduct.setAttribute("href", `./product.html?id=${response[i]._id}`);
 		displayProduct.setAttribute("value", response[i]._id);
 
 		sectionProducts.append(card);
@@ -58,7 +59,7 @@ get("http://localhost:3000/api/teddies/")
 	return response;
 })
 .then(function(response){
-addToBasket(response);
+	addToBasket(response);
 })
 .catch(function(error){
 	let divAlert = document.createElement("div")

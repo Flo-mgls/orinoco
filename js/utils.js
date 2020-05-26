@@ -62,3 +62,5 @@ function addToBasket(response){
 		})
 	}
 }
+
+export { get, displayBasket, addToBasket};
