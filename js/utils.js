@@ -16,25 +16,27 @@ function get(url){
 	})
 }
 
-function displayBasket(){
+function displayMiniBasket(){
 	let basket = document.getElementById("products-basket");
 	basket.innerHTML = "";
 	let productInBasket = JSON.parse(localStorage.getItem("panier"));
-	for(let i = 0; i < productInBasket.length; i++){
+	if(productInBasket != null){
+		for(let i = 0; i < productInBasket.length; i++){
 
-		let listProduct = document.createElement("li");
-		listProduct.setAttribute("class", "row");
+			let listProduct = document.createElement("li");
+			listProduct.setAttribute("class", "row");
 
-		let nameProduct = document.createElement("p");
-		nameProduct.setAttribute("class", "col-8 mb-0");
-		nameProduct.textContent = productInBasket[i].name;
+			let nameProduct = document.createElement("p");
+			nameProduct.setAttribute("class", "col-8 mb-0");
+			nameProduct.textContent = productInBasket[i].name;
 
-		let qdProduct = document.createElement("p");
-		qdProduct.setAttribute("class", "col-4 mb-0");
-		qdProduct.textContent = productInBasket[i].quantity;
+			let qdProduct = document.createElement("p");
+			qdProduct.setAttribute("class", "col-4 mb-0");
+			qdProduct.textContent = productInBasket[i].quantity;
 
-		basket.append(listProduct);
-		listProduct.append(nameProduct, qdProduct);
+			basket.append(listProduct);
+			listProduct.append(nameProduct, qdProduct);
+		}
 	}
 }
 
@@ -54,7 +56,7 @@ function addToBasket(response){
 			if(basket === null){
 				selectedProduct.quantity = 1;
 				localStorage.setItem("panier", `[${JSON.stringify(selectedProduct)}]`);
-				displayBasket();
+				displayMiniBasket();
 			}else{
 				basket = localStorage.getItem("panier");
 				let basketParsed = JSON.parse(basket);
@@ -64,17 +66,17 @@ function addToBasket(response){
 					basketParsed.push(selectedProduct);
 					localStorage.clear();
 					localStorage.setItem("panier", JSON.stringify(basketParsed));
-					displayBasket();
+					displayMiniBasket();
 				}else{
 					productInBasketParsed[0].quantity += 1;
 					let basketWithoutThis = basketParsed.filter(product => product._id != selectedProduct._id);
 					basketWithoutThis.push(productInBasketParsed[0]);
 					localStorage.setItem("panier", JSON.stringify(basketWithoutThis));
-					displayBasket();
+					displayMiniBasket();
 				}
 			}
 		})
 	}
 }
 
-export { get, displayBasket, addToBasket};
+export { get, displayMiniBasket, addToBasket};

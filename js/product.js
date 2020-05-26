@@ -1,4 +1,4 @@
-import {get, displayBasket, addToBasket} from "./utils.js";
+import {get, displayMiniBasket, addToBasket} from "./utils.js";
 let urlWithParameters = window.location.search;
 let urlParameters = new URLSearchParams(urlWithParameters);
 let idProduct = urlParameters.get("id");
@@ -73,8 +73,8 @@ get("http://localhost:3000/api/teddies/" + idProduct)
 	divAlert.textContent = "Désolé, impossible d'afficher le produit demandé";
 	document.getElementById("products").append(divAlert);
 })
-displayBasket();
+displayMiniBasket();
 document.getElementById("clean-basket").addEventListener("click", function(){
 	localStorage.clear();
-	displayBasket();
+	displayMiniBasket();
 })

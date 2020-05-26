@@ -1,4 +1,4 @@
-import {get, displayBasket, addToBasket} from "./utils.js";
+import {get, displayMiniBasket, addToBasket} from "./utils.js";
 get("http://localhost:3000/api/teddies/")
 .then(function(response) {
 	for(let i = 0; i < response.length; i++){
@@ -11,7 +11,7 @@ get("http://localhost:3000/api/teddies/")
 		cardRow.setAttribute("class", "row align-items-center");
 
 		let imgCol = document.createElement("div");
-		imgCol.setAttribute("class", "col-md-2")
+		imgCol.setAttribute("class", "col-md-4")
 
 		let cardImage = document.createElement("img");
 		cardImage.setAttribute("class", "card-img");
@@ -19,7 +19,7 @@ get("http://localhost:3000/api/teddies/")
 		cardImage.setAttribute("alt", "image du produit");
 
 		let bodyCol = document.createElement("div");
-		bodyCol.setAttribute("class", "col-md-10");
+		bodyCol.setAttribute("class", "col-md-8");
 
 		let cardBody = document.createElement("div");
 		cardBody.setAttribute("class", "card-body");
@@ -69,11 +69,11 @@ get("http://localhost:3000/api/teddies/")
 	document.getElementById("products").append(divAlert);
 })
 
-displayBasket();
+displayMiniBasket();
 
 document.getElementById("clean-basket").addEventListener("click", function(){
 	localStorage.clear();
-	displayBasket();
+	displayMiniBasket();
 })
 
 
