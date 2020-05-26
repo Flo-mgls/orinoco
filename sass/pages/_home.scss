@@ -1,32 +1,6 @@
-$main-color: #f1e9f0;
-$second-color: #E8EAF6;
-body{
-	background-color: $second-color;
-	min-height: 100vh;
-	position: relative;
-}
-header{
-	background-color: $main-color;
-	box-shadow: 0 2px 8px;
-	h1{
-		font-family: 'Gloria Hallelujah', cursive;
-		color: black;
-	}
-}
 main{
 	padding-bottom: 12em;
 	.card{
 		background-color: $second-color;
-	}
-}
-footer{
-	background-color: $main-color;
-	box-shadow: 0 -2px 8px;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	h2{
-		font-family: 'Gloria Hallelujah', cursive;
-		color: black;
 	}
 }

@@ -19,23 +19,22 @@ function get(url){
 function displayBasket(){
 	let basket = document.getElementById("products-basket");
 	basket.innerHTML = "";
+	let productInBasket = JSON.parse(localStorage.getItem("panier"));
+	for(let i = 0; i < productInBasket.length; i++){
 
-	for(let i = 0; i < localStorage.length; i++){
-		if (localStorage.key(i).startsWith('{"colors"')){
-			let listProduct = document.createElement("li");
-			listProduct.setAttribute("class", "row");
+		let listProduct = document.createElement("li");
+		listProduct.setAttribute("class", "row");
 
-			let nameProduct = document.createElement("p");
-			nameProduct.setAttribute("class", "col-8 mb-0");
-			nameProduct.textContent = JSON.parse(localStorage.key(i)).name;
+		let nameProduct = document.createElement("p");
+		nameProduct.setAttribute("class", "col-8 mb-0");
+		nameProduct.textContent = productInBasket[i].name;
 
-			let qdProduct = document.createElement("p");
-			qdProduct.setAttribute("class", "col-4 mb-0");
-			qdProduct.textContent = localStorage.getItem(localStorage.key(i));
+		let qdProduct = document.createElement("p");
+		qdProduct.setAttribute("class", "col-4 mb-0");
+		qdProduct.textContent = productInBasket[i].quantity;
 
-			basket.append(listProduct);
-			listProduct.append(nameProduct, qdProduct);
-		}
+		basket.append(listProduct);
+		listProduct.append(nameProduct, qdProduct);
 	}
 }
 
@@ -51,13 +50,28 @@ function addToBasket(response){
 			}else{
 				selectedProduct = response;
 			}
-			let storedProduct = localStorage.getItem(JSON.stringify(selectedProduct));
-			if(storedProduct != null){
-				localStorage.setItem(JSON.stringify(selectedProduct), `${parseFloat(storedProduct) + 1}`);
+			let basket = localStorage.getItem("panier");
+			if(basket === null){
+				selectedProduct.quantity = 1;
+				localStorage.setItem("panier", `[${JSON.stringify(selectedProduct)}]`);
 				displayBasket();
 			}else{
-				localStorage.setItem(JSON.stringify(selectedProduct), "1");
-				displayBasket();
+				basket = localStorage.getItem("panier");
+				let basketParsed = JSON.parse(basket);
+				let productInBasketParsed = basketParsed.filter(product => product._id == selectedProduct._id);
+				if(productInBasketParsed.length == 0){
+					selectedProduct.quantity = 1;
+					basketParsed.push(selectedProduct);
+					localStorage.clear();
+					localStorage.setItem("panier", JSON.stringify(basketParsed));
+					displayBasket();
+				}else{
+					productInBasketParsed[0].quantity += 1;
+					let basketWithoutThis = basketParsed.filter(product => product._id != selectedProduct._id);
+					basketWithoutThis.push(productInBasketParsed[0]);
+					localStorage.setItem("panier", JSON.stringify(basketWithoutThis));
+					displayBasket();
+				}
 			}
 		})
 	}
