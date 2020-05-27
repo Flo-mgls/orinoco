@@ -39,25 +39,31 @@ get("http://localhost:3000/api/teddies/" + idProduct)
 	cardPrice.setAttribute("class", "card-text");
 	cardPrice.textContent = `${response.price} €`;
 
+	let form = document.createElement("form");
+
 	let selectColor = document.createElement("select");
-	selectColor.setAttribute("class", "custom-select mb-4");
+	selectColor.setAttribute("class", "form-control custom-select mb-4");
+	selectColor.setAttribute("required", "");
 
 	let optionTitle = document.createElement("option");
 	optionTitle.setAttribute("selected", "");
 	optionTitle.setAttribute("disabled", "");
+	optionTitle.setAttribute("value", "");
 	optionTitle.textContent = "Sélectionnez une couleur";
 
 	let addProduct = document.createElement("btn");
 	addProduct.setAttribute("class", "btn btn-primary btn-addProduct");
 	addProduct.setAttribute("value", response._id);
-	addProduct.textContent = "Ajouter au panier"
+	addProduct.textContent = "Ajouter au panier";
 
 	sectionProducts.append(card);
 	card.append(cardImage, cardBody);
-	cardBody.append(cardTitle, cardDescription, cardPrice, selectColor, addProduct);
+	cardBody.append(cardTitle, cardDescription, cardPrice, form);
+	form.append(selectColor, addProduct);
 	selectColor.append(optionTitle);
 	for(let i = 0; i < response.colors.length; i++){
 		let optionColor = document.createElement("option");
+		optionColor.setAttribute("value", response.colors[i]);
 		optionColor.textContent = response.colors[i];
 		selectColor.append(optionColor);
 	}

@@ -12,7 +12,7 @@
 	<!-- FontAwesome -->
 	<script src="https://kit.fontawesome.com/25774bd025.js" crossorigin="anonymous"></script>
 	<!-- JS -->
-	<script defer src="./js/basket.js" type="module"></script>
+	<script defer src="./js/confirm.js"></script>
 	<!-- Info -->
 	<title>Orinoco</title>
 </head>
@@ -42,44 +42,13 @@
 		</nav>
 	</header>
 
-	<main class="mt-4 container">
-		<section id="basket">
-		</section>
-		<section id="form-basket">
-			<form class="container-fluid text-center mt-4">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="firstName">Prénom</label>
-							<input type="text" class="form-control" id="firstName" placeholder="Goku" required>
-						</div>
-						<div class="form-group">
-							<label for="lastName">Nom</label>
-							<input type="text" class="form-control" id="lastName" placeholder="Son" required>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="address">Adresse</label>
-							<input type="text" class="form-control" id="address" placeholder="1001 étage tour de Dendé" required>
-						</div>
-						<div class="form-group">
-							<label for="city">Ville</label>
-							<input type="text" class="form-control" id="city" placeholder="Namek" required>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							<label for="email">Email</label>
-							<input type="email" class="form-control" id="email" placeholder="son-goku@saiyan.nk" required>
-						</div>
-					</div>
-				</div>
-				<button type="submit" class="btn btn-primary" id="confirmOrder">Confirmer</button>
-			</form>
-		</section>
+	<main class="text-center mt-5">
+		<p class="h1">
+			Commande effectuée !
+		</p>
+		<p class="h3 font-weight-normal">Coût total: <span class="font-weight-bold" id="costOrder"></span></p>
+		<p class="h3 font-weight-normal">Identifiant:<br/><span class="font-weight-bold" id="idOrder"></span></p>
+		<p>Merci pour votre commande, à très bientôt</p>
 	</main>
 
 	<footer>

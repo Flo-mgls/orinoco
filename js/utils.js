@@ -1,12 +1,29 @@
 function get(url){
 	return new Promise((resolve, reject) => {
 		let request = new XMLHttpRequest();
-		request.open("GET", url, true);
+		request.open("GET", url);
 		request.send();
 		request.onreadystatechange = function(){
 			if(this.readyState === 4){
 				if(this.status === 200){
+					resolve(JSON.parse(this.responseText));
+				}else{
+					reject(request);
+				}
+			}
+		}
+	})
+}
 
+function post(url, data){
+	return new Promise((resolve, reject) => {
+		let request = new XMLHttpRequest();
+		request.open("POST", url);
+		request.setRequestHeader("content-type", "application/json");
+		request.send(JSON.stringify(data));
+		request.onreadystatechange = function(){
+			if(this.readyState === 4){
+				if(this.status === 201){
 					resolve(JSON.parse(this.responseText));
 				}else{
 					reject(request);
@@ -79,4 +96,4 @@ function addToBasket(response){
 	}
 }
 
-export { get, displayMiniBasket, addToBasket};
+export { get, post, displayMiniBasket, addToBasket};
