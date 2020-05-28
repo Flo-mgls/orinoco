@@ -11,20 +11,33 @@
 	<link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
 	<!-- FontAwesome -->
 	<script src="https://kit.fontawesome.com/25774bd025.js" crossorigin="anonymous"></script>
-	<!-- JS -->
-	<script defer src="./js/basket.js" type="module"></script>
 	<!-- Info -->
-	<title>Orinoco</title>
+	<title>Orinoco - Panier</title>
+	<meta name="description" content="Orinoco - détail de votre panier">
+	<link rel="shortcut icon" type="image/png" href="./contents/images/favicon.png">
+	<!-- Metatag -->
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:title" content="Orinoco - Confirmation de commande">
+	<meta property="og:description" content="Orinoco - Confirmation de commande">
+	<meta property="og:image" content="./contents/images/share-pic.png">
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="">
+	<meta property="twitter:title" content="Orinoco - Confirmation de commande">
+	<meta property="twitter:description" content="Orinoco - Confirmation de commande">
+	<meta property="twitter:image" content="./contents/images/share-pic.png">
 </head>
 
 <body>
 	<header>
 		<nav class="navbar justify-content-start navbar-light navbar-expand-md">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<a class="navbar-brand ml-2" href="./index.html">
-				<img src="./contents/images/logo.svg" class="d-inline-block align-top" wdith="40" height="40" alt=""/>
+				<img src="./contents/images/logo.svg" class="d-inline-block align-top" width="40" height="40" alt=""/>
 				<h1 class="d-inline-block h2">Orinoco</h1>
 			</a>
 
@@ -86,7 +99,7 @@
 		<div class="container-fluid">
 			<div class="row text-center py-2">
 				<div class="col">
-					<img src="./contents/images/logo.svg" class="d-inline-block align-top" wdith="40" height="40" alt=""/>
+					<img src="./contents/images/logo.svg" class="d-inline-block align-top" width="40" height="40" alt=""/>
 					<h2 class="d-inline-block">Orinoco</h2>
 				</div>
 			</div>
@@ -109,10 +122,14 @@
 		</div>
 	</footer>
 
-	<!-- Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</body>
+	<!-- JS -->
+	<!-- <script src="./dist/polyfill.bundle.js"></script>
+		<script src="./dist/basket.bundle.js"></script> -->
+		<script src="./js/basket.js" type="module"></script>
+		<!-- Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	</body>
 
-</html>
+	</html>

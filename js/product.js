@@ -4,12 +4,13 @@ let urlParameters = new URLSearchParams(urlWithParameters);
 let idProduct = urlParameters.get("id");
 get("http://localhost:3000/api/teddies/" + idProduct)
 .then(function(response){
+	document.title = "Orinoco - Peluche " + response.name;
 	let breadcrumb = document.getElementsByClassName("breadcrumb")[0];
 	breadcrumb.lastElementChild.setAttribute("class", "breadcrumb-item");
 	breadcrumb.lastElementChild.removeAttribute("aria-current");
-	breadcrumb.lastElementChild.innerHTML = '<a href="./index.html">Peluches</a>'
+	breadcrumb.lastElementChild.innerHTML = '<a href="./index.html">Peluches</a>';
 	let breadcrumbCurrent = document.createElement("li");
-	breadcrumbCurrent.setAttribute("class", "breadcrumb-item active")
+	breadcrumbCurrent.setAttribute("class", "breadcrumb-item active");
 	breadcrumbCurrent.setAttribute("aria-current", "page");
 	breadcrumbCurrent.textContent = response.name;
 	breadcrumb.append(breadcrumbCurrent);
@@ -22,7 +23,7 @@ get("http://localhost:3000/api/teddies/" + idProduct)
 	let cardImage = document.createElement("img");
 	cardImage.setAttribute("class", "card-img-top");
 	cardImage.setAttribute("src", response.imageUrl);
-	cardImage.setAttribute("alt", "image du produit");
+	cardImage.setAttribute("alt", "");
 
 	let cardBody = document.createElement("div");
 	cardBody.setAttribute("class", "card-body text-center");
@@ -61,26 +62,26 @@ get("http://localhost:3000/api/teddies/" + idProduct)
 	cardBody.append(cardTitle, cardDescription, cardPrice, form);
 	form.append(selectColor, addProduct);
 	selectColor.append(optionTitle);
-	for(let i = 0; i < response.colors.length; i++){
+	response.colors.forEach(function(color){
 		let optionColor = document.createElement("option");
-		optionColor.setAttribute("value", response.colors[i]);
-		optionColor.textContent = response.colors[i];
+		optionColor.setAttribute("value", color);
+		optionColor.textContent = color;
 		selectColor.append(optionColor);
-	}
+	});
 	return response;
 })
 .then(function(response){
 	addToBasket(response);
 })
 .catch(function(error){
-	let divAlert = document.createElement("div")
+	let divAlert = document.createElement("div");
 	divAlert.setAttribute("class", "alert alert-danger");
 	divAlert.setAttribute("role", "alert");
 	divAlert.textContent = "Désolé, impossible d'afficher le produit demandé";
 	document.getElementById("products").append(divAlert);
-})
+});
 displayMiniBasket();
 document.getElementById("clean-basket").addEventListener("click", function(){
 	localStorage.clear();
 	displayMiniBasket();
-})
+});
