@@ -80,7 +80,7 @@ function displayBasket(){ // Fonction servant à afficher notre panier dans la p
 					localStorage.clear(); // On clean le panier
 					if(productsInBasket.length > 0){ // Si ce n'était pas le seul produit dans le panier
 						localStorage.setItem("panier", JSON.stringify(productsInBasket)); // Alors on réinitialise le panier avec le changement prit en compte
-					}
+				}
 					displayBasket(); // On réaffiche le nouveau panier
 				});
 			});
@@ -106,39 +106,48 @@ function displayBasket(){ // Fonction servant à afficher notre panier dans la p
 displayBasket(); // On affiche le panier dans le DOM en lançant cette fonction
 
 let inputOrder = document.getElementsByTagName("input"); // On récupère tous les input de la page (donc ceux concernant le formulaire de commande)
-document.getElementById("confirmOrder").addEventListener("click", function(e){ // A l'envoi
-	e.preventDefault(); // On désactive le comportement par défaut pour le traiter nous même
+let formOrder = document.getElementById("formOrder"); // On récupère le formulaire
 
-	let contact = { // On crée un object contact: les propriété ayant comme valeur chacune des valeurs de nos input
-		firstName: inputOrder[0].value,
-		lastName: inputOrder[1].value,
-		address: inputOrder[2].value,
-		city: inputOrder[3].value,
-		email: inputOrder[4].value
-	};
+formOrder.addEventListener("submit", function(e){ // Lorsque le formulaire est envoyé
+	e.preventDefault(); // On l'empêche de changer de page pour le rediriger nous-même
+});
+document.getElementById("confirmOrder").addEventListener("click", function(){ // A l'envoi
 
-	let basket = JSON.parse(localStorage.getItem("panier")); // On récupère notre panier
-	let products = []; // On initialise un tableau qui contiendra les id des produits acheté et qu'on enverra au back
+	if(formOrder.checkValidity()){
+		let contact = { // On crée un object contact: les propriété ayant comme valeur chacune des valeurs de nos input
+			firstName: inputOrder[0].value,
+			lastName: inputOrder[1].value,
+			address: inputOrder[2].value,
+			city: inputOrder[3].value,
+			email: inputOrder[4].value
+		};
 
-	basket.forEach(function(product){ // Pour chaque produits dans le panier
+		let basket = JSON.parse(localStorage.getItem("panier")); // On récupère notre panier
+		let products = []; // On initialise un tableau qui contiendra les id des produits acheté et qu'on enverra au back
+
+		basket.forEach(function(product){ // Pour chaque produits dans le panier
 		products.push(product._id); // On push l'id dans le tableau à envoyer
-	});
+		});
 
-	let data = { contact, products }; // On défini la data à envoyer
+		let data = { contact, products }; // On défini la data à envoyer
 
-	post("http://localhost:3000/api/teddies/order", data) // On envoi data au back
-	.then(function(response){ // Si tout s'est bien passé on récupère la réponse du serveur
-		let orderId = response.orderId; // On récupère l'id de commande présent dans la réponse
-		localStorage.clear(); // On clean le panier pour les futur commandes
-		localStorage.setItem("orderId", orderId); // On stock dans le localStorage notre id de commande
-		localStorage.setItem("totalPrice", totalPrice); // Et le prix total
-		window.location.href = "./confirm.html"; // On renvoi l'user vers la page de confirmation de commande
-	})
-	.catch(function(error){ // S'il y a eu une erreur
-		let divAlert = document.createElement("div");
-		divAlert.setAttribute("class", "alert alert-danger mt-2");
-		divAlert.setAttribute("role", "alert");
-		divAlert.textContent = "Désolé, impossible de faire suivre votre demande, veuillez réessayer plus tard"; // On le précise à l'user
-		document.getElementById("form-basket").append(divAlert);
-	});
+		post("http://localhost:3000/api/teddies/order", data) // On envoi data au back
+		.then(function(response){ // Si tout s'est bien passé on récupère la réponse du serveur
+			let orderId = response.orderId; // On récupère l'id de commande présent dans la réponse
+			localStorage.clear(); // On clean le panier pour les futur commandes
+			localStorage.setItem("orderId", orderId); // On stock dans le localStorage notre id de commande
+			localStorage.setItem("totalPrice", totalPrice); // Et le prix total
+			window.location.href = "./confirm.html"; // On renvoi l'user vers la page de confirmation de commande
+		})
+		.catch(function(error){ // S'il y a eu une erreur
+			if(document.getElementById("alertError") === null){ // On s'assure l'alert n'a pas déjà été crée pour éviter le spam
+				let divAlert = document.createElement("div");
+				divAlert.setAttribute("class", "alert alert-danger mt-2");
+				divAlert.setAttribute("role", "alert");
+				divAlert.setAttribute("id", "alertError");
+				divAlert.textContent = "Désolé, impossible de faire suivre votre demande, veuillez réessayer plus tard"; // On le précise à l'user
+				document.getElementById("form-basket").append(divAlert);
+			}
+		});
+	}
 });

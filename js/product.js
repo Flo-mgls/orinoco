@@ -45,6 +45,7 @@ get("http://localhost:3000/api/teddies/" + idProduct) // On fait une requête po
 	cardPrice.textContent = `${response.price} €`;
 
 	let form = document.createElement("form"); // On crée un élément form qui contiendra le choix des couleurs
+	form.setAttribute("id", "formBuy");
 
 	let selectColor = document.createElement("select"); // On crée donc un élément select 
 	selectColor.setAttribute("class", "form-control custom-select mb-4");
@@ -56,9 +57,10 @@ get("http://localhost:3000/api/teddies/" + idProduct) // On fait une requête po
 	optionTitle.setAttribute("value", "");
 	optionTitle.textContent = "Sélectionnez une couleur";
 
-	let addProduct = document.createElement("button"); // On crée un élemenr button pour l'ajout au panier
+	let addProduct = document.createElement("button"); // On crée un élement button pour l'ajout au panier
 	addProduct.setAttribute("class", "btn btn-primary btn-addProduct");
 	addProduct.setAttribute("value", response._id); // On lui met comme valeur l'id de notre peluche qui servira à addToBasket() pour l'ajout
+	addProduct.setAttribute("type", "submit");
 	addProduct.textContent = "Ajouter au panier";
 
 	sectionProducts.append(card); // On intègre tous ces éléments au DOM
@@ -77,7 +79,12 @@ get("http://localhost:3000/api/teddies/" + idProduct) // On fait une requête po
 	return response; // On retourne notre object peluche
 })
 .then(function(response){ // Si tout s'est bien affiché
-	addToBasket(response); // On permet la fonction addToBasket 
+	addToBasket(response); // On permet la fonction addToBasket
+
+	let formBuy = document.getElementById("formBuy");
+	formBuy.addEventListener("submit", function(e){ // On empêche le form d'actualiser la page pour gérer nous même le comportement
+		e.preventDefault();
+	}); 
 })
 .catch(function(error){ // Sinon on affiche un message d'erreur indiquant à l'user qu'il y a eu un problème
 	let divAlert = document.createElement("div");
