@@ -44,7 +44,7 @@ get("http://localhost:3000/api/teddies/") // On fait une requête pour obtenir l
 		addProduct.style.zIndex = "2"; // z-index défini à 2 pour être par dessus le stretched-link permettant d'aller à la fiche produit
 		addProduct.style.position = "relative"; // position relative nécessaire pour qu'il soit au dessus
 
-		let displayProduct = document.createElement("a"); // On crée un élément a 
+		let displayProduct = document.createElement("a"); // On crée un élément a qui mènera au produit en question
 		displayProduct.setAttribute("class", "stretched-link goto-product"); // Stretched-link permet d'avoir un lien qui s'étend à son parent
 		displayProduct.setAttribute("href", `./product.html?id=${product._id}`); // Son href est notre page product.html avec un paramètre: l'id de notre object
 
