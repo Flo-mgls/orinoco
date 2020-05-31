@@ -66,7 +66,7 @@ function addToBasket(response) { // Fonction servant à l'ajout au panier lors d
         let idProduct = btnAddProduct[i].getAttribute("value"); // On récupère leur valeur qui est l'id de l'object qu'ils permettent d'ajouter au panier
 
         btnAddProduct[i].addEventListener("click", function() { // Au click sur un bouton
-            if ((pathName.startsWith("/product") && form[0].checkValidity()) || pathName.startsWith("/index")) { // Si on est sur la page product on doit vérifier que l'user ait choisi une couleur
+            if ((pathName.endsWith("/product.html") && form[0].checkValidity()) || pathName.endsWith("/index.html")) { // Si on est sur la page product on doit vérifier que l'user ait choisi une couleur
                 let selectedProduct; // On défini une variable qui contiendra l'object en question
                 if (Array.isArray(response)) { // Si le click vient de l'index response est un tableau de tous les produits, s'il vient d'une page produit en particulier ce n'est pas un tableau mais juste un objet
                     selectedProduct = response.filter(product => product._id == idProduct).shift(); // Si c'est un tableau: on récupère dans celui-ci l'object ayant un id = a la valeur de notre bouton 
